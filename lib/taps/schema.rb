@@ -60,6 +60,7 @@ END_MIG
 
   def load(database_url, schema)
     Sequel.connect(database_url) do |db|
+      schema.gsub!(":size=>65535", ":text=>true")
       klass = eval(schema)
       klass.apply(db, :down)
       klass.apply(db, :up)
